@@ -36,7 +36,12 @@ app.use(notFound);
 app.use(errorHandler);
 
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  app.listen(PORT, "0.0.0.0", () => {
+    const { networkInterfaces } = require("os");
+    const nets = networkInterfaces();
+    const localIP = Object.values(nets).flat().find(
+      (i) => i.family === "IPv4" && !i.internal
+    )?.address || "localhost";
+    console.log(`Server running on http://${localIP}:${PORT}`);
   });
 });

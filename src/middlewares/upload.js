@@ -1,11 +1,8 @@
 const multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: "assets/uploads",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// memoryStorage — file ah RAM la hold pannum (Cloudinary ku anuppa)
+// Old: diskStorage — see archive/old-code-reference.js
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
